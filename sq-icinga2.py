@@ -25,17 +25,28 @@ def print_usage():
 def form_payload(**kwargs):
     """Forms the python representation of the data payload to be sent from the passed configuration"""
     data = {}
-    
     if(kwargs["alert_source"]=="HOST"):
         data = {
             "host_state":kwargs["host_state"],
-            "host_output":kwargs["host_output"]
+            "host_output":kwargs["host_output"],
+            "host_num_services_ok":kwargs["host_num_services_ok"],
+            "host_num_services_warning":kwargs["host_num_services_warning"],
+            "host_num_services_unknown":kwargs["host_num_services_unknown"],
+            "host_num_services_critical":kwargs["host_num_services_critical"],
+            "host_execution_time":kwargs["host_execution_time"],
+            "host_latency":kwargs["host_latency"]
+
         }
     elif(kwargs["alert_source"]=="SERVICE"):
         data = {
             "service_state":kwargs["service_state"],
             "service_output":kwargs["service_output"],
             "service_description":kwargs["service_description"],
+            "service_duration":kwargs["service_duration"],
+            "service_comment":kwargs["service_comment"],
+            "service_latency":kwargs["service_latency"],
+            "service_execution_time" :kwargs["service_execution_time"],
+            "service_downtime_depth": kwargs["service_downtime_depth"]
         }
 
     payload_rep = {
@@ -74,6 +85,19 @@ if __name__ == "__main__":
     service_state = os.getenv("ICINGA_SERVICESTATE")
     service_output = os.getenv("ICINGA_SERVICEOUTPUT")
     service_description = os.getenv("ICINGA_SERVICEDESC")
+    service_duration = os.getenv("ICINGA_SERVICEDURATIONSEC")
+    service_comment = os.getenv("ICINGA_COMMENT")
+    service_latency = os.getenv("ICINGA_SERVICELATENCY")
+    service_execution_time = os.getenv("ICINGA_SERVICEEXECUTIONTIME")
+    service_downtime_depth = os.getenv("ICINGA_SERVICEDOWNTIMEDEPTH")
+
+    host_num_services_ok = os.getenv("ICINGA_HOSTNUMSERVICESOK")
+    host_num_services_warning = os.getenv("ICINGA_HOSTNUMSERVICESWARNING")
+    host_num_services_unknown = os.getenv("ICINGA_HOSTNUMSERVICESUNKNOWN")
+    host_num_services_critical = os.getenv("ICINGA_HOSTNUMSERVICESCRITICAL")
+    host_execution_time = os.getenv("ICINGA_HOSTEXECUTIONTIME")
+    host_latency = os.getenv("ICINGA_HOSTLATENCY")
+    
     
 
     logger.info("[sq-icinga2] notification_type:{}".format(notification_type))
@@ -94,6 +118,18 @@ if __name__ == "__main__":
         host_output = host_output,
         service_state = service_state,
         service_output = service_output,
-        service_description = service_description
+        service_description = service_description,
+        service_duration= service_duration,
+        service_comment = service_comment,
+        service_latency = service_latency,
+        service_execution_time = service_execution_time,
+        service_downtime_depth = service_downtime_depth,
+        host_num_services_ok = host_num_services_ok,
+        host_num_services_warning = host_num_services_warning,
+        host_num_services_unknown = host_num_services_unknown,
+        host_num_services_critical = host_num_services_critical,
+        host_execution_time = host_execution_time,
+        host_latency  = host_latency
+
         ))
     print("Done.")
