@@ -63,8 +63,12 @@ def post_to_url(url, payload):
     """Posts the formed payload as json to the passed url"""
     try:
         gcontext = ssl.SSLContext()
+        #provide host and post to enable proxy
+#         proxy_host="host:port"   
         req = urllib.request.Request(url, data=bytes(json.dumps(payload), "utf-8"))
         req.add_header("Content-Type", "application/json")
+        #uncomment below line if you are enabling proxy
+#         req.set_proxy(proxy_host, 'http')
         resp = urllib.request.urlopen(req, context=gcontext)
         if resp.status > 299:
            logger.error("[sq-icinga2] Request failed with status code %s : %s" % (resp.status, resp.read()))
