@@ -63,7 +63,7 @@ def post_to_url(url, payload):
     """Posts the formed payload as json to the passed url"""
     try:
         gcontext = ssl.SSLContext()
-        #provide host and post to enable proxy
+        #provide host and port to enable proxy
 #         proxy_host="host:port"   
         req = urllib.request.Request(url, data=bytes(json.dumps(payload), "utf-8"))
         req.add_header("Content-Type", "application/json")
