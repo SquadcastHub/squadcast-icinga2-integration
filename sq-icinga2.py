@@ -65,8 +65,11 @@ def post_to_url(url, payload):
         gcontext = ssl.SSLContext()
         #provide host and port to enable proxy
 #         proxy_host="host:port"   
-        req = urllib.request.Request(url, data=bytes(json.dumps(payload), "utf-8"))
-        req.add_header("Content-Type", "application/json")
+        headers={
+        'User-Agent': 'squadcast',
+        "Content-Type": "application/json"
+        }
+        req = urllib.request.Request(url, data=bytes(json.dumps(payload),"utf-8"),headers=headers)
         #uncomment below line if you are enabling proxy
 #         req.set_proxy(proxy_host, 'http')
         resp = urllib.request.urlopen(req, context=gcontext)
